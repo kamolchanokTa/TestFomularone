@@ -1,4 +1,6 @@
-import com.agoda.formula.assesments.Assessment;
+package main;
+
+import main.assesments.Assessment;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class RaceResultCalculatorImpl implements RaceResultCalculator {
     private List<Assessment> allAssesments;
 
 
+
     public RaceResultCalculatorImpl(int numberOfTeams, float trackLength, List<Assessment> allAssesments, float rearrageTimeFrame) {
         this.numberOfTeams = numberOfTeams;
         this.trackLength = trackLength;
@@ -31,7 +34,7 @@ public class RaceResultCalculatorImpl implements RaceResultCalculator {
     }
 
     private void initTeams() {
-        for (int i = 1; i <= numberOfTeams; i++) {
+        for(int i = 1;i<=numberOfTeams;i++){
             racingTeams.add(new RacingTeam(i));
         }
     }
@@ -39,13 +42,13 @@ public class RaceResultCalculatorImpl implements RaceResultCalculator {
     public List<FinishingStats> calculateFinishingStatsForAllCars() {
         List<FinishingStats> finishedTeams = new LinkedList<>();
         float currentTime = 0;
-        while (finishedTeams.size() != numberOfTeams) {
+        while(finishedTeams.size()!=numberOfTeams){
             currentTime += rearrageTimeFrame;
-            for (Assessment assessment : allAssesments) {
+            for(Assessment assessment:allAssesments){
                 assessment.runAssessment(racingTeams, finishedTeams, currentTime);
             }
             System.out.println("Status on " + currentTime + " second of race: ");
-            for (RacingTeam racingTeam : racingTeams) {
+            for(RacingTeam racingTeam: racingTeams){
                 System.out.println("TeamId " + racingTeam.getTeamId() + " is on " + racingTeam.getCurrentPosition() + " meter and speed is " + racingTeam.getCurrentSpeedMetersPerSecond());
             }
         }

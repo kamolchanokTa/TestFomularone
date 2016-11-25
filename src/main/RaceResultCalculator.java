@@ -1,3 +1,7 @@
+package main;
+
+import main.FinishingStats;
+
 import java.util.List;
 
 /**

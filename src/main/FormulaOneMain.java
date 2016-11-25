@@ -1,19 +1,21 @@
-/**
+package main; /**
  * Created by u6037291 on 11/24/2016.
  */
 
-import com.agoda.formula.assesments.*;
+import main.assesments.*;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.cli.*;
 
 import java.util.List;
 public class FormulaOneMain {
+
     private final static String NUMBER_OF_TEAM_OPTION = "n";
     private final static String TRACK_LENGTH_METERS = "lm";
     private final static float HANDLING_DISTANCE_METERS = 10;
     private final static float REARRANGE_TIME_WINDOW_SEC = 2;
 
     private final static Options options;
+
 
 
     static {
@@ -29,10 +31,10 @@ public class FormulaOneMain {
 
 
     public static void main(String[] args) throws ParseException {
-        CommandLineParser commandLineParser = new DefaultParser();
-        CommandLine commandLine = commandLineParser.parse(options, args);
-        int numberOfTeams = Integer.parseInt(commandLine.getOptionValue(NUMBER_OF_TEAM_OPTION));
-        float trackLengthMeters = Float.parseFloat(commandLine.getOptionValue(TRACK_LENGTH_METERS));
+       // CommandLineParser commandLineParser = new DefaultParser();
+        //CommandLine commandLine = commandLineParser.parse(options, args);
+        int numberOfTeams = 5;//Integer.parseInt(commandLine.getOptionValue(NUMBER_OF_TEAM_OPTION));
+        float trackLengthMeters = 20000;//Float.parseFloat(commandLine.getOptionValue(TRACK_LENGTH_METERS));
 
         RaceResultCalculator raceResultCalculator = new RaceResultCalculatorImpl(numberOfTeams, trackLengthMeters, getListOfAllRequiredAssessments(trackLengthMeters), REARRANGE_TIME_WINDOW_SEC);
         List<FinishingStats> finishingStatsList = raceResultCalculator.calculateFinishingStatsForAllCars();
@@ -40,7 +42,7 @@ public class FormulaOneMain {
         printResults(finishingStatsList);
     }
 
-    private static List<Assessment> getListOfAllRequiredAssessments(float trackLengthMeters) {
+    private static List<Assessment> getListOfAllRequiredAssessments(float trackLengthMeters){
         return ImmutableList.<Assessment>of(
                 new SpeedAndPositionAssessment(),
                 new FinishingAssessment(trackLengthMeters),
@@ -50,9 +52,10 @@ public class FormulaOneMain {
     }
 
     private static void printResults(List<FinishingStats> finishingStatsList) {
-        for (int i = 0; i < finishingStatsList.size(); i++) {
+        for(int i = 0; i<finishingStatsList.size(); i++){
             FinishingStats current = finishingStatsList.get(i);
             System.out.printf("Team #%d finished %f seconds after starts with speed %f \n", current.getTeamId(), current.getTime(), current.getSpeed());
         }
     }
+
 }
